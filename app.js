@@ -67,7 +67,12 @@ const createSlider = () => {
   document.querySelector('.main').style.display = 'block';
   // hide image area
   imagesArea.style.display = 'none';
-  const duration = document.getElementById('duration').value || 1000;
+  
+  let duration = document.getElementById('duration').value || 1000;
+   if (duration < 0) {
+     duration = 1000;
+   }
+
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
@@ -107,7 +112,14 @@ const changeSlide = (index) => {
   })
 
   items[index].style.display = "block"
-}
+} 
+  document.getElementById('search')
+   .addEventListener("keypress", function (event) {
+     
+       if(event.key == 'Enter') {
+         document.getElementById('search-btn').click();
+       }
+   })
 
 searchBtn.addEventListener('click', function () {
   document.querySelector('.main');
