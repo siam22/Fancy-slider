@@ -24,15 +24,18 @@ const showImages = (images) => {
     div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div)
+    toggleSpinner(false);
   })
 
 }
 
 const getImages = (query) => {
+  toggleSpinner(true);
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
     .catch(err => console.log(err))
+    
 }
 
 let slideIndex = 0;
@@ -44,9 +47,11 @@ const selectItem = (event, img) => {
   if (item === -1) {
     sliders.push(img);
   } else {
-    alert('Hey, Already added !')
+    element.classList.remove('added');
+    sliders.splice(item, 1);
   }
-}
+}    
+
 var timer
 const createSlider = () => {
   // check slider image length
@@ -54,6 +59,7 @@ const createSlider = () => {
     alert('Select at least 2 image.')
     return;
   }
+
   // crate slider previous next area
   sliderContainer.innerHTML = '';
   const prevNext = document.createElement('div');
@@ -113,9 +119,22 @@ const changeSlide = (index) => {
 
   items[index].style.display = "block"
 } 
+
+  // Additional feature: Spinner
+   const toggleSpinner = (show) => {
+    const spinner = document.getElementById('loading-spinner');
+    if(show){
+      spinner.classList.remove('d-none');
+    }
+    else{
+      spinner.classList.add('d-none');
+    }
+    
+}
+  
   document.getElementById('search')
    .addEventListener("keypress", function (event) {
-     
+
        if(event.key == 'Enter') {
          document.getElementById('search-btn').click();
        }
