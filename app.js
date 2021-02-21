@@ -75,6 +75,8 @@ const createSlider = () => {
   imagesArea.style.display = 'none';
   
   let duration = document.getElementById('duration').value || 1000;
+  // Additional feature 1: Alert before creating the slide
+  alert('Do you wanna create it?')
    if (duration < 0) {
      duration = 1000;
    }
@@ -120,7 +122,7 @@ const changeSlide = (index) => {
   items[index].style.display = "block"
 } 
 
-  // Additional feature: Spinner
+  // Additional feature 2: Spinner
    const toggleSpinner = (show) => {
     const spinner = document.getElementById('loading-spinner');
     if(show){
